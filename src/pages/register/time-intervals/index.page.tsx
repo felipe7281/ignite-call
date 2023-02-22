@@ -22,6 +22,7 @@ import { getWeekDays } from '@/src/utils/get-week-days'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { convertTimeStringToMinutes } from '@/src/utils/convert-time-string-to-minutes'
 import { api } from '@/src/lib/axios'
+import { useRouter } from 'next/router'
 
 const timeIntervalsFormSchema = z.object({
   intervals: z
@@ -85,6 +86,7 @@ export default function TimeIntervals() {
       ],
     },
   })
+  const router = useRouter()
 
   const weekDays = getWeekDays()
 
@@ -101,6 +103,8 @@ export default function TimeIntervals() {
     await api.post('/users/time-intervals', {
       intervals,
     })
+
+    await router.push('/register/update-profile')
   }
   return (
     <Container>
